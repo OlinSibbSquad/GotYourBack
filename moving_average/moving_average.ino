@@ -27,11 +27,14 @@ float moveAvgAy;
 float moveAvgAz;
 bool startCalc;
 float t;
-const float XCONST = 0.51;
+const float XCONST = 0.50;
 const float YCONST = 0.0;
 const float ZCONST = 0.0;
 
 int curr_avg;
+
+const int INSTRUCTIONS[4] = {1, 1, 1, 1};
+const bool TURNS[4] = {true, true, true, true};
 
 void setup() {
   // put your setup code here, to run once:
@@ -80,6 +83,9 @@ void loop(){
   movingAverageAx[curr_avg] = imu.ax;
   movingAverageAy[curr_avg] = imu.ay;
   movingAverageAz[curr_avg] = imu.az;
+  Serial.println(imu.ax);
+  Serial.println(imu.ay);
+  Serial.println(imu.az);
   curr_avg = curr_avg + 1;
 
   if(startCalc){
@@ -97,11 +103,12 @@ void loop(){
     da_z = imu.calcAccel(moveAvgAz)*9.8 + ZCONST;
     dv_z = da_z * t / 1000 + dv_z;
     dx_z = 1/2 * da_z * sq(t / 1000) + dv_z * t / 1000 + dx_z;
+    
     if(abs(dx_x)>= 3){ //3 = distance to travel
       resetStuff();
       lastTime = currentTime;
       Serial.println("We Reset!!");
-      delay(1000);
+      delay(10);
       lastTime = currentTime;
       startCalc = false;
       }
@@ -110,10 +117,10 @@ void loop(){
     if(curr_avg == SIZED){
       startCalc = true;
     }
+    
   }
 
-  curr_avg = curr_avg % SIZED;
-  
+  startCalc = true;
   delay(20);
 }
 
@@ -123,6 +130,19 @@ void printStuff(){
       Serial.println(da_x);
       Serial.println(dv_x);
       Serial.println(dx_x);
+      Serial.println("Y values:");
+      Serial.println(da_y);
+      Serial.println(dv_y);
+      Serial.println(dx_y);
+      Serial.println("Z values:");
+      Serial.println(da_z);
+      Serial.println(dv_z);
+      Serial.println(dx_z);
+      Serial.println("Moving averages.");
+      Serial.println(moveAvgAx);
+      Serial.println(moveAvgAy);
+      Serial.println(moveAvgAz);
+      
 }
 
 void updateAvgs(){
