@@ -3,6 +3,7 @@
 #include <SPI.h> // SPI library included for SparkFunLSM9DS1
 #include <Wire.h> // I2C library included for SparkFunLSM9DS1
 #include <SparkFunLSM9DS1.h> // SparkFun LSM9DS1 library
+#include "pitches.h"
 LSM9DS1 imu;
 unsigned long initialTime; 
 unsigned long lastTime;
@@ -16,14 +17,15 @@ float dx_y;
 float da_z;
 float dv_z;
 float dx_z;
+int note = NOTE_F6;
 
 #include <SoftwareSerial.h>
 
 SoftwareSerial BTSerial(10, 11); // RX | TX
 
 
-// digital pin 2 has a pushbutton attached to it. Give it a name:
-int pushButton = 2;
+// digital pin 2 has an IR attached to it. Give it a name:
+int irSensor = 2;
 int leftBuzz = 3;
 int rightBuzz = 4;
 
@@ -31,10 +33,12 @@ int rightBuzz = 4;
 void setup() {
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
-  // make the pushbutton's pin an input:
-  pinMode(pushButton, INPUT);
+  // make the irSensor's pin an input:
+  pinMode(irSensor, INPUT);
   pinMode(leftBuzz, OUTPUT);
   pinMode(rightBuzz, OUTPUT);
+
+//  attachInterrupt(digitalPinToInterrupt(irSensor), irUpdate, FALLING);
 
   // Use the LSM9DS1 class to create an object. [imu] can be
   // named anything, we'll refer to that throught the sketch.
@@ -56,23 +60,28 @@ void setup() {
 //  check();
 }
 
+void irUpdate(){
+  Serial.println("Get the heckers away from me!");
+  bleep();
+}
+
+
 // the loop routine runs over and over again forever:
 void loop() {
   // read the input pin:
-  int buttonState = digitalRead(pushButton);
+  int buttonState = digitalRead(irSensor);
+  
   // print out the state of the button:
   Serial.println(buttonState);
-//   
+
   if(buttonState == LOW){
     buzzWriteHigh();
-    
+    bleep();
   }
   else {
     buzzWriteLow();
   }
- 
-
-    delay(100);        // delay in between reads for stability
+ delay(100);        // delay in between reads for stability
 }
 
 void buzzWriteHigh(){
@@ -84,6 +93,12 @@ void buzzWriteLow(){
   digitalWrite(leftBuzz, LOW);
   digitalWrite(rightBuzz, LOW);
 }
+
+void bleep(){
+  int noteDuration = 1000 / 2;
+  tone(8, note, noteDuration);
+}
+
 
 
 int check(){

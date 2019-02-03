@@ -1,3 +1,5 @@
+//ADD MOVING AVERAGE BEFORE INTEGRATING WITH WHOLE.
+
 #include <SPI.h> // SPI library included for SparkFunLSM9DS1
 #include <Wire.h> // I2C library included for SparkFunLSM9DS1
 #include <SparkFunLSM9DS1.h> // SparkFun LSM9DS1 library
@@ -74,16 +76,20 @@ void loop(){
   dv_z = da_z * t / 1000 + dv_z;
   dx_z = 1/2 * da_z * sq(t / 1000) + dv_z * t / 1000 + dx_z;
   if(abs(dx_x)>= 3){ 
-    dv_x = 0;
-    dx_x = 0;
-    dv_y = 0;
-    dx_y = 0;
-    dv_z = 0;
-    dx_z = 0;
+    resetStuff();
     lastTime = currentTime;
     Serial.println("We Reset!!");
     delay(1000);
     lastTime = currentTime;
     }
    delay(200);
+}
+
+void resetStuff(){
+    dv_x = 0;
+    dx_x = 0;
+    dv_y = 0;
+    dx_y = 0;
+    dv_z = 0;
+    dx_z = 0;
 }
