@@ -116,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GeoApiContext geoApiContext = new GeoApiContext();
         return geoApiContext
                 .setQueryRateLimit(3)
-                .setApiKey("AIzaSyDqygPzuJrckRxVRNf6pjgjRrx81oldUoA")
+                .setApiKey("KEY_GOES_HERE")
                 .setConnectTimeout(1, TimeUnit.SECONDS)
                 .setReadTimeout(1, TimeUnit.SECONDS)
                 .setWriteTimeout(1, TimeUnit.SECONDS);
