@@ -1,5 +1,5 @@
 # Got Your Back
-MakeHarvard 2019 Project. Check out our [devpost](https://devpost.com/software/gotyourback-x30znu) for photos of the final project, and look at the subfolders for code examples.
+Our Sibb family's MakeHarvard 2019 Project. Check out our [devpost](https://devpost.com/software/gotyourback-x30znu) for photos of the final project, and look at the subfolders for code examples.
 
 # Our Vision
 Everyone has been scared of walking home alone at night or trying to navigate somewhere unfamiliar. The minute you pay too much attention to your phone, you suddenly look vulnerable, yet phones are essential for navigation. For people with auditory and visual impairments, this is even more concerning as it can be harder to detect people around while also navigating different terrain. Thus, we created GotYourBack.
@@ -13,13 +13,13 @@ GotYourBack allows hands-free navigation in an accessible manner while keeping t
 Our key components are an Ardunio-Uno based hardware device (more specifically, a plywood and composite casing with external vibration motors that connect to the straps of any backpack) where each component is mounted that fits in a backpack and communicates via Bluetooth to an Android app (in our case, on a Kindle fire phone fit with Android features) that leverages the Google maps API to provide navigational assistance. We used the Arduino to command all of the electrical components of our project and with the potential to communicate over Bluetooth to the Amazon Fire Phone. The Amazon Fire Phone was used to connect to the Google Maps API and as a general sensor suite (for location services associated GPS, network discovery, etc.) for the user.
 
 # Challenges we ran into
-# Integration
+## Integration
 The biggest problem we repeatedly encountered was integration between different parts of our design. We actually had a full IR camera we had intended to use as part of the backpack, but found that we were unable to set it up due to Harvard's WiFi blocking any unauthorized networks. With no router of our own and no way to used wired Ethernet to connect to the camera directly, we were forced to pivot to using an IR sensor to detect if anyone was behind the user. We also had large issues with passing information over Bluetooth, and it is still extremely unreliable although we are able to pair our phones with the Arduino's Bluetooth. The google maps API also proved problematic: it was very difficult to coordinate the phone's integrated location services, so most solutions required more direct address encoding.
 
-# Demonstrating in-house
+## Demonstrating in-house
 Although our product may work fairly well at a large scale, we aren't exactly able to walk all over Cambridge while demonstrating (plus, with the current frigid cold we don't think anyone would want to with us!). Therefore, we had to figure out how to best demonstrate what we were doing in a smaller environment. What we settled on was using an accelerometer in order to approximate how far we've navigated and then use some pre-programmed instructions for where to navigate to. This unfortunately limits what we can show but due to the supplies we have and the time constraints we were unable to determine a better way to demonstrate our hack.
 
-# Android Application
+## Android Application
 The android application built for this particular project works to integrate Bluetooth connectivity, the location services framework, and the google cloud services API to provide a seamless user experience. Unfortunately, the integration step proved to be much more taxing than running each individual process in isolation, so use of the application requires a nontrivial amount of overhead from the user side.
 
 # Accomplishments that we're proud of
